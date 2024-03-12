@@ -27,4 +27,34 @@ public class RomanNumeralTest {
                 Arguments.of(1000, "M")
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("testAdditiveNotationArgs")
+    public void testAdditiveNotation(int digit, String expectedNumeral){
+        RomanNumeral numeral = new RomanNumeral(digit);
+        Assertions.assertEquals(expectedNumeral, numeral.toString());
+    }
+
+    public static Stream<Arguments> testAdditiveNotationArgs(){
+        return Stream.of(
+                Arguments.of(2, "II"),
+                Arguments.of(3, "III"),
+                Arguments.of(6, "VI"),
+                Arguments.of(7, "VII"),
+                Arguments.of(8, "VIII"),
+                Arguments.of(20, "XX"),
+                Arguments.of(30, "XXX"),
+                Arguments.of(60, "LX"),
+                Arguments.of(70, "LXX"),
+                Arguments.of(80, "LXXX"),
+                Arguments.of(200, "CC"),
+                Arguments.of(300, "CCC"),
+                Arguments.of(600, "DC"),
+                Arguments.of(700, "DCC"),
+                Arguments.of(800, "DCCC"),
+                Arguments.of(2000, "MM"),
+                Arguments.of(3000, "MMM")
+        );
+    }
+
 }

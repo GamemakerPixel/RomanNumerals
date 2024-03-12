@@ -13,6 +13,8 @@ public class RomanNumeral {
         put(1000, "M");
     }};
 
+    public static final int[] arabicKeys = {1000, 500, 100, 50, 10, 5, 1};
+
     private final int value;
 
     public RomanNumeral(int value) {
@@ -25,6 +27,15 @@ public class RomanNumeral {
     }
 
     private String convertToRomanNumeralRepresentation(){
-        return arabicRomanDigitMap.get(value);
+        StringBuilder representation = new StringBuilder();
+        int remainder = value;
+
+        for (int arabicKey: arabicKeys){
+            int quotient = remainder / arabicKey;
+            remainder -= quotient * arabicKey;
+            representation.append(arabicRomanDigitMap.get(arabicKey).repeat(quotient));
+        }
+
+        return representation.toString();
     }
 }
