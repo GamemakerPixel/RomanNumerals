@@ -57,4 +57,21 @@ public class RomanNumeralTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("testSubtractiveNotationArgs")
+    public void testSubtractiveNotation(int digit, String expectedNumeral){
+        RomanNumeral numeral = new RomanNumeral(digit);
+        Assertions.assertEquals(expectedNumeral, numeral.toString());
+    }
+
+    public static Stream<Arguments> testSubtractiveNotationArgs(){
+        return Stream.of(
+                Arguments.of(4, "IV"),
+                Arguments.of(9, "IX"),
+                Arguments.of(40, "XL"),
+                Arguments.of(90, "XC"),
+                Arguments.of(400, "CD"),
+                Arguments.of(900, "CM")
+        );
+    }
 }

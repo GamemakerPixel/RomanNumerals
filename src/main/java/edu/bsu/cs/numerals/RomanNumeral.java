@@ -27,15 +27,55 @@ public class RomanNumeral {
     }
 
     private String convertToRomanNumeralRepresentation(){
+        int firstDigit = getFirstDigit(value);
+        if (firstDigit == 4 || firstDigit == 9){
+            return getSubtractiveNotation(value);
+        }
+        return getAdditiveNotation(value);
+    }
+
+    private int getFirstDigit(int number){
+        int powerOfTen = (int) Math.log10(number);
+        return (int) (number / Math.pow(10, powerOfTen));
+    }
+
+    private String getAdditiveNotation(int remainder){
         StringBuilder representation = new StringBuilder();
-        int remainder = value;
 
         for (int arabicKey: arabicKeys){
             int quotient = remainder / arabicKey;
             remainder -= quotient * arabicKey;
+
             representation.append(arabicRomanDigitMap.get(arabicKey).repeat(quotient));
         }
 
         return representation.toString();
+    }
+
+    private String getSubtractiveNotation(int remainder){
+        StringBuilder representation = new StringBuilder();
+
+        int reversalIndex = findSubtractiveReversalIndex(remainder);
+        int reversalKey = arabicKeys[reversalIndex];
+        remainder = reversalKey - remainder;
+        representation.append(arabicRomanDigitMap.get(reversalKey));
+
+        for (int keyIndex = reversalIndex + 1; keyIndex < arabicKeys.length; keyIndex++) {
+            if (arabicKeys[keyIndex] == remainder){
+                representation.insert(0, arabicRomanDigitMap.get(arabicKeys[keyIndex]));
+            }
+        }
+
+        return representation.toString();
+    }
+
+    private int findSubtractiveReversalIndex(int remainder){
+        for (int keyIndex = arabicKeys.length - 2; keyIndex >= 1; keyIndex--){
+            int arabicKey = arabicKeys[keyIndex];
+            if (arabicKey > remainder){
+                return keyIndex;
+            }
+        }
+        return 0;
     }
 }
