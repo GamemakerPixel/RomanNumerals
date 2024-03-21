@@ -27,16 +27,18 @@ public class RomanNumeral {
     }
 
     private String convertToRomanNumeralRepresentation(){
-        int firstDigit = getFirstDigit(value);
-        if (firstDigit == 4 || firstDigit == 9){
-            return getSubtractiveNotation(value);
+        StringBuilder result = new StringBuilder();
+        ExpandedForm expandedForm = new ExpandedForm(value);
+        for (int digitIndex = 0; digitIndex < expandedForm.getDigitCount(); digitIndex++){
+            if (expandedForm.getDigit(digitIndex) == 4 || expandedForm.getDigit(digitIndex) == 9){
+                result.append(getSubtractiveNotation(expandedForm.getSummand(digitIndex)));
+            }
+            else{
+                result.append(getAdditiveNotation(expandedForm.getSummand(digitIndex)));
+            }
         }
-        return getAdditiveNotation(value);
-    }
 
-    private int getFirstDigit(int number){
-        int powerOfTen = (int) Math.log10(number);
-        return (int) (number / Math.pow(10, powerOfTen));
+        return result.toString();
     }
 
     private String getAdditiveNotation(int remainder){

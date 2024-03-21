@@ -1,6 +1,7 @@
 package edu.bsu.cs.numerals;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -73,5 +74,17 @@ public class RomanNumeralTest {
                 Arguments.of(400, "CD"),
                 Arguments.of(900, "CM")
         );
+    }
+
+    @Test
+    public void test1912(){
+        RomanNumeral numeral = new RomanNumeral(1912);
+        Assertions.assertEquals("MCMXII", numeral.toString());
+    }
+
+    @Test
+    public void test2024(){
+        RomanNumeral numeral = new RomanNumeral(2024);
+        Assertions.assertEquals("MMXXIV", numeral.toString());
     }
 }
